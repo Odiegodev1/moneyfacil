@@ -1,9 +1,9 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { BadgeDollarSign, BadgeDollarSignIcon, BarChart3, Calendar, ChartBar, CheckCircle, Clock, DollarSignIcon, Mail, Phone, PhoneCall, QuoteIcon, Receipt, RectangleEllipsis, Sparkle, Star, User2, Wallet2, Wallet2Icon, WalletCards } from "lucide-react";
+import { BadgeDollarSign, BadgeDollarSignIcon, BarChart3, Calendar, ChartBar, CheckCircle, Clock,  Mail, Phone, PhoneCall, QuoteIcon, Receipt, RectangleEllipsis, Sparkle, Star, User2,  Wallet2Icon, WalletCards } from "lucide-react";
 import Image from "next/image";
 import Cta from "../../public/cta.jpg"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { signIn } from "next-auth/react";
 
 
