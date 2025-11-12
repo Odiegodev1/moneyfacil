@@ -3,17 +3,20 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Car, SquareArrowDownRight, SquareArrowUpRight, Wallet2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getResumoFinanceiro } from "../actions/getresumo";
+
 interface Resumo {
   receita: number;
   despesa: number;
   saldo: number;
 }
+
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   }).format(value);
 }
+
 export function CardWallet(){
       const [resumo, setResumo] = useState<Resumo>({
     receita: 0,
@@ -28,6 +31,7 @@ export function CardWallet(){
     }
     loadResumo();
   }, []);
+  
     return(
         <div className="grid md:grid-cols-3 p-2 gap-3 w-full ">
            <Card className="w-full bg-primary/20 border-2 border-primary">

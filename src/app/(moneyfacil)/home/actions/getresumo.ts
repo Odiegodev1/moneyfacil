@@ -13,12 +13,11 @@ export async function getResumoFinanceiro() {
     };
   }
 
-  // Busca todas as transações do usuário
+
   const transacoes = await prisma.transacao.findMany({
     where: { userId: session.user.id },
   });
 
-  // Soma receitas e despesas
   const receita = transacoes
     .filter((t) => t.tipo === "RECEITA")
     .reduce((acc, t) => acc + t.valor, 0);
