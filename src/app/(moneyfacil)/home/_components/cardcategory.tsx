@@ -8,7 +8,7 @@ export function Cardcategory() {
             <Card className="md:w-full bg-primary/20 border-2 border-primary p-4">
                 <div>
                 <CardTitle className="text-xl text-zinc-300">Gasto por categoria</CardTitle>
-                <CardDescription>Total: R$ 4.500.90</CardDescription>
+                <CardDescription></CardDescription>
                 </div>
             <CardContent>
                 <div className="mt-7">

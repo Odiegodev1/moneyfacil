@@ -1,9 +1,34 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SquareArrowDownRight, SquareArrowUpLeft, SquareArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getTransacoesRecentes } from "../actions/get-transacoes";
+
+type Transacao = {
+  id: string;
+  titulo: string;
+  valor: number;
+  tipo: string;
+  data: string;
+  categoria: {
+    nome: string;
+    cor: string;
+    tipo: string;
+  };
+};
 
 
 export function CardRecents(){
+    const [transacoes, setTransacoes] = useState<Transacao[]>([]);
+    useEffect(() => {
+    async function loadData() {
+      const data = await getTransacoesRecentes();
+      setTransacoes(data as any);
+    }
+    loadData();
+  }, []);
+   
     return(
         <div className="p-2 flex flex-col w-full">
             <Card className="md:w-full bg-primary/20">
@@ -19,97 +44,27 @@ export function CardRecents(){
                 </CardHeader>
                 <CardContent>
                    <div className="space-y-4">
-                     <Card className="p-0 px-4 py-4 bg-zinc-800">
+                    {transacoes.map((t) => (
+                         <Card key={t.id} className="p-0 px-4 py-4 bg-zinc-800">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                <div className="size-14 flex items-center justify-center rounded-2xl bg-primary">
                                 <SquareArrowUpRight className="text-zinc-200 size-8" />
                                 </div> 
                                 <div className="space-y-1">
-                                    <h1 className="text-zinc-200">Salário</h1>
-                                    <p className="text-zinc-600 text-sm">11/12/2025</p>
+                                    <h1 className="text-zinc-200">{t.titulo}</h1>
+                                    <p className="text-zinc-600 text-sm">{new Date(t.data).toLocaleDateString("pt-BR")}</p>
                                 </div>
                             </div>
 
                             <div className="flex flex-col space-y-1">
-                                <span className="flex items-center justify-center text-zinc-300 bg-red-500 px-2 rounded-2xl">Trabalho</span>
-                                <h1 className="text-white">R$ 2.450.90</h1>
+                                <span className="flex items-center justify-center text-zinc-300 px-2 rounded-2xl" style={{backgroundColor: t.categoria.cor}}>{t.categoria.nome}</span>
+                                <h1 className="text-white">R$ {t.valor.toFixed(2)}</h1>
                             </div>
                         </div>
                      </Card>
-                      <Card className="p-0 px-4 py-4 bg-zinc-800">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                               <div className="size-14 flex items-center justify-center rounded-2xl bg-primary">
-                                <SquareArrowUpRight className="text-zinc-200 size-8" />
-                                </div> 
-                                <div className="space-y-1">
-                                    <h1 className="text-zinc-200">Salário</h1>
-                                    <p className="text-zinc-600 text-sm">11/12/2025</p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col space-y-1">
-                                <span className="flex items-center justify-center text-zinc-300 bg-red-500 px-2 rounded-2xl">Trabalho</span>
-                                <h1 className="text-white">R$ 2.450.90</h1>
-                            </div>
-                        </div>
-                     </Card>
-                      <Card className="p-0 px-4 py-4 bg-zinc-800">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                               <div className="size-14 flex items-center justify-center rounded-2xl bg-red-500">
-                                <SquareArrowDownRight className="text-zinc-200 size-8" />
-                                </div> 
-                                <div className="space-y-1">
-                                    <h1 className="text-zinc-200">Mercado</h1>
-                                    <p className="text-zinc-600 text-sm">11/12/2025</p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col space-y-1">
-                                <span className="flex items-center justify-center text-zinc-300 bg-red-500 px-2 rounded-2xl">Mercado</span>
-                                <h1 className="text-white">- R$ 450.90</h1>
-                            </div>
-                        </div>
-                     </Card>
-                      <Card className="p-0 px-4 py-4 bg-zinc-800">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                               <div className="size-14 flex items-center justify-center rounded-2xl bg-primary">
-                                <SquareArrowUpRight className="text-zinc-200 size-8" />
-                                </div> 
-                                <div className="space-y-1">
-                                    <h1 className="text-zinc-200">Salário</h1>
-                                    <p className="text-zinc-600 text-sm">11/12/2025</p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col space-y-1">
-                                <span className="flex items-center justify-center text-zinc-300 bg-red-500 px-2 rounded-2xl">Trabalho</span>
-                                <h1 className="text-white">R$ 2.450.90</h1>
-                            </div>
-                        </div>
-                     </Card>
-                      <Card className="p-0 px-4 py-4 bg-zinc-800">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                               <div className="size-14 flex items-center justify-center rounded-2xl bg-primary">
-                                <SquareArrowUpRight className="text-zinc-200 size-8" />
-                                </div> 
-                                <div className="space-y-1">
-                                    <h1 className="text-zinc-200">Salário</h1>
-                                    <p className="text-zinc-600 text-sm">11/12/2025</p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col space-y-1">
-                                <span className="flex items-center justify-center text-zinc-300 bg-red-500 px-2 rounded-2xl">Trabalho</span>
-                                <h1 className="text-white">R$ 2.450.90</h1>
-                            </div>
-                        </div>
-                     </Card>
-                   </div>
+                    ))}
+                     </div>
                 </CardContent>
 
             </Card>

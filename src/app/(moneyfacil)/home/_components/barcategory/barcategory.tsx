@@ -1,8 +1,7 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
+import { useEffect, useState } from "react"
 import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts"
-
 import {
   Card,
   CardContent,
@@ -12,54 +11,64 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { getGastosPorCategoria } from "@/app/(moneyfacil)/home/actions/getGastosPorCategoria"
 
-export const description = "A bar chart with an active bar"
+interface CategoriaData {
+  nome: string
+  cor: string
+  total: number
+}
 
-const chartData = [
-  { browser: "Trabalho", Gastos: 187, fill: "var(--color-red-500)" },
-  { browser: "Mercado", Gastos: 200, fill: "var(--color-emerald-500)" },
-  { browser: "Lazer", Gastos: 275, fill: "var(--color-blue-500)" },
-  { browser: "contas", Gastos: 173, fill: "var(--color-yellow-500)" },
-  { browser: "outros", Gastos: 90, fill: "var(--color-purple-500)" },
-]
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  Trabalho: {
-    label: "Trabalho",
-    color: "var(--chart-1)",
-  },
- Mercado : {
-    label: "Mercado",
-    color: "var(--chart-2)",
-  },
-  Lazer: {
-    label: "Lazer",
-    color: "var(--chart-3)",
-  },
-  contas: {
-    label: "contas",
-    color: "var(--chart-4)",
-  },
-  outros: {
-    label: "outros",
-    color: "var(--chart-5)",
-  },
-} satisfies ChartConfig
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value)
+}
 
 export function ChartBarActive() {
+  const [chartData, setChartData] = useState<
+    { browser: string; Gastos: number; fill: string }[]
+  >([])
+
+  const [chartConfig, setChartConfig] = useState<
+    Record<string, { label: string; color: string }>
+  >({})
+
+  useEffect(() => {
+    async function loadData() {
+      const categorias: CategoriaData[] = await getGastosPorCategoria()
+      const data = categorias.map((c) => ({
+        browser: c.nome,
+        Gastos: c.total,
+        fill: c.cor,
+        
+      }
+    
+    ))
+    
+      const config = categorias.reduce((acc, c) => {
+        acc[c.nome] = { label: c.nome, color: c.cor }
+            console.log(c.nome)
+        return acc
+    
+      }, {} as Record<string, { label: string; color: string }>)
+      setChartData(data)
+      setChartConfig(config)
+    }
+
+    loadData()
+  }, [])
+
   return (
-    <Card >
+    <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Active</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Gastos por Categoria</CardTitle>
+        <CardDescription>Resumo das suas despesas</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -76,15 +85,18 @@ export function ChartBarActive() {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={
+                <ChartTooltipContent
+                  hideLabel
+                  formatter={(val) => formatCurrency(val as number)}
+                />
+              }
             />
             <Bar
               dataKey="Gastos"
-              
-             
               strokeWidth={2}
               radius={8}
-              activeIndex={2}
+              activeIndex={4}
               activeBar={({ ...props }) => {
                 return (
                   <Rectangle
@@ -97,15 +109,11 @@ export function ChartBarActive() {
                 )
               }}
             />
-            
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-         
-        </div>
-       
+        <div className="flex gap-2 leading-none font-medium"></div>
       </CardFooter>
     </Card>
   )

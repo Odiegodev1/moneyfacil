@@ -1,10 +1,14 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogDescription, DialogHeader } from "@/components/ui/dialog";
+import { DialogContent, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import { MinusCircleIcon, Plus, PlusCircleIcon, Receipt } from "lucide-react";
 
 export function CreateButtonWallet() {
     return (
          <div className="grid md:grid-cols-3 p-2 gap-3 w-full ">
-           <Card className="w-full bg-primary/20 border-2 border-primary">
+
+
+       <Card className="w-full bg-primary/20 border-2 border-primary">
             
              <CardContent>
                 <div className="flex items-center gap-4">
@@ -17,8 +21,8 @@ export function CreateButtonWallet() {
                     </div>
                 </div>
              </CardContent>
+             
            </Card>
-
              <Card className="w-full bg-emerald-500/20 border-2 border-emerald-500">
             
              <CardContent>

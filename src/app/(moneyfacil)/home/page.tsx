@@ -4,8 +4,25 @@ import { CardWallet } from "./_components/CardWallet";
 import { CreateButtonWallet } from "./_components/createbuttonwallet";
 import { Cardcategory } from "./_components/cardcategory";
 import { CardRecents } from "./_components/cardrecents";
-
-export default function Home() {
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input";
+import { CreateDialog } from "./_components/dialogcreate";
+export default async function Home() {
+   const session = await auth();
+   if(!session?.user){
+      return(
+         redirect("/")
+      )
+   }
     return (
        <section className="flex flex-col min-h-screen w-full bg-zinc-900">
          <header className="flex md:px-40 justify-between  h-18 p-4 border-b w-full items-center">
@@ -26,7 +43,8 @@ export default function Home() {
       </header>
       <main className="flex-1 w-full items-center justify-center max-w-400 mt-20  mx-auto ">
         <CardWallet />
-        <CreateButtonWallet />
+        <CreateDialog />
+      
         <div className="md:flex    md:gap-4  mt-4">
             <Cardcategory />
             <CardRecents />

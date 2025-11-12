@@ -1,9 +1,17 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { BadgeDollarSign, BadgeDollarSignIcon, BarChart3, Calendar, ChartBar, CheckCircle, Clock, DollarSignIcon, Mail, Phone, PhoneCall, QuoteIcon, Receipt, RectangleEllipsis, Sparkle, Star, User2, Wallet2, Wallet2Icon, WalletCards } from "lucide-react";
 import Image from "next/image";
 import Cta from "../../public/cta.jpg"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-export default function Home() {
+import { signIn } from "next-auth/react";
+
+
+export default function Page() {
+
+async function handleregister() {
+  await signIn("github",{redirectTo:"/home"});
+}
   return (
    <section className="flex flex-col w-full min-h-screen   ">
       <header className="flex justify-between  h-18 p-4 border w-full items-center">
@@ -30,7 +38,7 @@ export default function Home() {
           </ul>
         </nav>
 
-        <Button className="p-2">Teste Gratís</Button>
+        <Button onClick={handleregister} className="p-2">Teste Gratís</Button>
       </header>
       
       <main className="flex flex-col items-center justify-center  bg-zinc-900 h-full">
