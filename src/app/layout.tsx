@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {  Sora } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const FontFamily = Sora({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({
       <body
         className={`${FontFamily.className} antialiased`}
       >
-        {children}
+        <SessionProvider>
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
