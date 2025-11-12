@@ -23,20 +23,7 @@ async function handleregister() {
           <h1 className="text-2xl font-bold text-purple-800">MoneyFacíl</h1>
         </div>
 
-        <nav className="hidden md:flex gap-4 font-semibold text-purple-800">
-          <ul className="flex items-center gap-2">
-            <li>
-              <a href="/login">Recursos</a>
-            </li>
-            <li>
-              <a href="/register">Como Funciona</a>
-            </li>
-             <li>
-              <a href="/register">Depoimentos</a>
-            </li>
-            
-          </ul>
-        </nav>
+        
 
         <Button onClick={handleregister} className="p-2">Teste Gratís</Button>
       </header>
@@ -103,7 +90,7 @@ async function handleregister() {
 
        </div>
 
-       <Button className="md:mt-8 md:w-120">Comece agora</Button>
+       <Button onClick={handleregister} className="md:mt-8 md:w-120">Comece agora</Button>
 </div>
          
            
